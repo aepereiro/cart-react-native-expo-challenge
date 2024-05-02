@@ -16,13 +16,16 @@ export default NavBar;
 const styles = StyleSheet.create({
   navBar: {
     flexDirection: 'row',
+    display: 'flex',
+    width: '100%',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 10
+    paddingTop: 40,
+    padding: 20,
   },
   photo: {
-    width: 40,
-    height: 40,
+    width: 50,
+    height: 50,
     borderRadius: 20,
   }
 });

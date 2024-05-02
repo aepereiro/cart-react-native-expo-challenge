@@ -11,7 +11,7 @@ import ProductsGrid from './components/ProductsGrid';
 const App = () => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState('All');
   const categories = ['All', 'Beer', 'Wine'];
 
   useEffect(() => {
@@ -32,9 +32,7 @@ const App = () => {
   const fetchProducts = async () => {
     try {
       const response = await fetch(`${API_URL}/api/products`);
-      console.log("response: ", {response})
       const json = await response.json();
-      console.log("responseJSON: ", {json})
       setProducts(json);
       setFilteredProducts(json); // initially set all products
     } catch (error) {
@@ -45,13 +43,17 @@ const App = () => {
   return (
     <View style={styles.container}>
       <NavBar />
-      <GreetingSearch userName="John Doe" />
+      <GreetingSearch userName="Mr. Michael" />
+      <Text style={styles.selector}>Drink Category</Text>
       <SegmentedControl
-        values={categories}
-        selectedIndex={selectedIndex}
-        onTabPress={setSelectedIndex}
+        values={['All', 'Beer', 'Wine']}
+        selectedIndex={0}
+
+        onChange={(event) => {
+          setSelectedIndex(event.nativeEvent.selectedSegmentIndex);
+        }}
       />
-      <Text>Our Products</Text>
+      <Text style={styles.gridTitle}>Populer</Text>
       <ProductsGrid products={filteredProducts} />
     </View>
   );
@@ -60,9 +62,26 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    width: '100%',
+    backgroundColor: '#eee',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  selector: {
+      fontSize: 24,
+      display: 'flex',
+      alignSelf: 'flex-start',
+      padding: 40,
+      fontWeight: 'bold',
+      color: '#000',
+  },
+  gridTitle: {
+    fontSize: 24,
+    display: 'flex',
+    alignSelf: 'flex-start',
+    padding: 40,
+    fontWeight: 'bold',
+    color: '#000',
   },
 });
 
